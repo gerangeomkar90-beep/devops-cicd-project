@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - Food Delivery</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">🍴 FoodExpress</div>
+
+    <div class="nav-right">
+        <span>Home</span>
+        <span>Restaurants</span>
+        <span>Offers</span>
+        <button class="cart-button" onclick="openCart()">
+            🛒 Cart <span id="cart-count">0</span>
+        </button>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="tagline">FAST • FRESH • DELICIOUS</p>
+
+        <h1>
+            Delicious food,
+            <span>delivered fast.</span>
+        </h1>
+
+        <p>
+            Order your favourite meals from FoodExpress
+            and enjoy fresh food at your doorstep.
+        </p>
+
+        <a href="#menu" class="hero-button">Explore Menu</a>
+    </div>
+
+    <div class="hero-food">
+        🍕
+    </div>
+</section>
+
+<section class="menu-section" id="menu">
+
+    <div class="section-heading">
+        <p>OUR MENU</p>
+        <h2>Popular Dishes</h2>
+        <span>Choose your favourite food and add it to your cart.</span>
+    </div>
+
+    <div class="menu-grid">
+
+        {% for item in menu %}
+
+        <div class="food-card">
+
+            <div class="food-image">
+                {{ item.emoji }}
+            </div>
+
+            <div class="food-content">
+
+                <div class="category">
+                    {{ item.category }}
+                </div>
+
+                <h3>{{ item.name }}</h3>
+
+                <p>{{ item.description }}</p>
+
+                <div class="food-bottom">
+
+                    <strong>₹{{ item.price }}</strong>
+
+                    <button
+                        onclick='addToCart({{ item | tojson }})'>
+                        + Add
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<section class="features">
+
+    <div>
+        <span>🚀</span>
+        <h3>Fast Delivery</h3>
+        <p>Fresh food delivered quickly.</p>
+    </div>
+
+    <div>
+        <span>🥗</span>
+        <h3>Fresh Food</h3>
+        <p>Quality ingredients in every meal.</p>
+    </div>
+
+    <div>
+        <span>🔒</span>
+        <h3>Secure Ordering</h3>
+        <p>Safe and reliable ordering.</p>
+    </div>
+
+</section>
+
+<footer>
+    <div>🍴 FoodExpress</div>
+    <p>DevOps CI/CD Food Delivery Project</p>
+</footer>
+
+
+<!-- CART MODAL -->
+
+<div id="cart-modal" class="modal">
+
+    <div class="cart-box">
+
+        <button class="close-button" onclick="closeCart()">×</button>
+
+        <h2>Your Cart 🛒</h2>
+
+        <div id="cart-items"></div>
+
+        <div class="cart-total">
+            Total: ₹<span id="cart-total">0</span>
+        </div>
+
+        <input
+            type="text"
+            id="customer-name"
+            placeholder="Enter your name">
+
+        <button class="order-button" onclick="placeOrder()">
+            Place Order
+        </button>
+
+        <p id="order-message"></p>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+
+</body>
+</html>
